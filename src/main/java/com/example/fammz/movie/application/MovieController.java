@@ -1,5 +1,7 @@
-package com.example.fammz.Movie;
+package com.example.fammz.movie.application;
 
+import com.example.fammz.movie.domain.Movie;
+import com.example.fammz.movie.domain.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,6 @@
-package com.example.fammz.Movie;
+package com.example.fammz.movie.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.example.fammz.Cast.Cast;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +27,5 @@ public class Movie {
     private String synopsis;
     private String posterUrl;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Cast> castList;  // Relación con Cast
+
 }

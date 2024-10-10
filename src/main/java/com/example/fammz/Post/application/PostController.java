@@ -1,8 +1,8 @@
-package com.example.fammz.Post.Controller;
+package com.example.fammz.post.application;
 
 import com.example.fammz.Post.DTOs.PostDTO;
-import com.example.fammz.Post.Post;
-import com.example.fammz.Post.Service.PostService;
+import com.example.fammz.post.domain.Post;
+import com.example.fammz.post.domain.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

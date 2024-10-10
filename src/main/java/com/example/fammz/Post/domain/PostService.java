@@ -1,6 +1,5 @@
-package com.example.fammz.Post.Service;
+package com.example.fammz.post.domain;
 
-import com.example.fammz.Post.Post;
 import com.example.fammz.Post.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

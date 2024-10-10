@@ -1,5 +1,6 @@
-package com.example.fammz.Movie;
+package com.example.fammz.movie.infrastructure;
 
+import com.example.fammz.movie.domain.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

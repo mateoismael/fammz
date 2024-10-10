@@ -1,9 +1,9 @@
 package com.example.fammz;
 
-import com.example.fammz.Post.Post;
+import com.example.fammz.post.domain.Post;
 import com.example.fammz.Post.Controller.PostController;
 import com.example.fammz.Post.DTOs.PostDTO;
-import com.example.fammz.Post.Service.PostService;
+import com.example.fammz.post.domain.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

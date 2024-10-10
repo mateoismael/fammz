@@ -1,5 +1,6 @@
-package com.example.fammz.Movie;
+package com.example.fammz.movie.domain;
 
+import com.example.fammz.movie.infrastructure.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

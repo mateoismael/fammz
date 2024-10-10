@@ -1,9 +1,5 @@
-package com.example.fammz.comment.domain;
+package com.example.fammz.post.domain;
 
-import com.example.fammz.post.domain.Post;
-import com.example.fammz.user.domain.User;
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,23 +11,27 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Comment {
+@Table(name = "posts")
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Long userId;
 
+    @Column(nullable = false)
+    private Long movieId;
+
+    @Column(nullable = false, length = 500)
     private String content;
-
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    private User user;
+    private Integer likesCount;
 
-    @ManyToOne
-    private Post post;
+    private Integer commentsCount;
 
 
 }
