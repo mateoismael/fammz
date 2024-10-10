@@ -2,7 +2,7 @@ package com.example.fammz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+// siu
 @SpringBootApplication
 public class FammzApplication {
 
