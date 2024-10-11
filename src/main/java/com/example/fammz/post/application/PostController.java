@@ -1,6 +1,6 @@
 package com.example.fammz.post.application;
 
-import com.example.fammz.Post.DTOs.PostDTO;
+import com.example.fammz.post.DTOs.PostDTO;
 import com.example.fammz.post.domain.Post;
 import com.example.fammz.post.domain.PostService;
 import org.springframework.beans.factory.annotation.Autowired;

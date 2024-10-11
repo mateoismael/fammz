@@ -1,4 +1,4 @@
-package com.example.fammz.Post.DTOs;
+package com.example.fammz.post.DTOs;
 
 public class PostDTO {
 

@@ -1,21 +1,27 @@
-package com.example.fammz.Post.DTOs;
+package com.example.fammz.post.DTOs;
 
-public class PostUpdateDTO {
+public class PostCreateDTO {
 
+    private Long userId;
     private Long movieId;
     private String content;
 
-    // Constructor vacío
-    public PostUpdateDTO() {
-    }
-
-    // Constructor con parámetros
-    public PostUpdateDTO(Long movieId, String content) {
+    // Constructor
+    public PostCreateDTO(Long userId, Long movieId, String content) {
+        this.userId = userId;
         this.movieId = movieId;
         this.content = content;
     }
 
     // Getters y Setters
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getMovieId() {
         return movieId;
     }
