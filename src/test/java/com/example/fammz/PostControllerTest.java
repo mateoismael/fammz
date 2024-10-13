@@ -38,13 +38,12 @@ public class PostControllerTest {
         List<Post> posts = new ArrayList<>();
         posts.add(new Post());
 
-        // Configurar el mock
+
         when(postService.getAllPosts()).thenReturn(posts);
 
-        // Llamar al método del controlador
+
         ResponseEntity<List<Post>> response = postController.getAllPosts();
 
-        // Verificar el resultado
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().size());
     }
