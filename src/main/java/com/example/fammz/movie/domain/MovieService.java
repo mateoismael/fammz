@@ -1,67 +1,66 @@
 package com.example.fammz.movie.domain;
 
+import com.example.fammz.movie.dto.MovieCreateDto;
+import com.example.fammz.movie.dto.MovieResponseDto;
 import com.example.fammz.movie.infrastructure.MovieRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
-
     @Autowired
     private MovieRepository movieRepository;
 
-    // Obtener todas las películas con filtro opcional por género y año
-    public List<Movie> getAllMovies(String genre, Integer releaseYear) {
-        if (genre != null && releaseYear != null) {
-            return movieRepository.findByGenreAndReleaseYear(genre, releaseYear);
-        } else if (genre != null) {
-            return movieRepository.findByGenre(genre);
-        } else if (releaseYear != null) {
-            return movieRepository.findByReleaseYear(releaseYear);
-        } else {
-            return movieRepository.findAll();
-        }
+    @Transactional
+    public MovieResponseDto createMovie(MovieCreateDto movieCreateDto) {
+        Movie movie = new Movie();
+        updateMovieFromDto(movie, movieCreateDto);
+        Movie savedMovie = movieRepository.save(movie);
+        return convertToResponseDto(savedMovie);
     }
 
-    // Obtener una película por su ID
-    public Movie getMovieById(Long id) {
-        Optional<Movie> movie = movieRepository.findById(id);
-        return movie.orElse(null);
+    public MovieResponseDto getMovieById(Long id) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+        return convertToResponseDto(movie);
     }
 
-    // Crear una nueva película
-    public Movie createMovie(Movie movie, List<Long> actorIds) {
-        // Aquí podrías agregar lógica para asociar actores a la película si es necesario
-        return movieRepository.save(movie);
+    public List<MovieResponseDto> getAllMovies() {
+        return movieRepository.findAll().stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
     }
 
-    // Actualizar una película existente
-    public Movie updateMovie(Long id, Movie movieDetails) {
-        Optional<Movie> optionalMovie = movieRepository.findById(id);
-        if (optionalMovie.isPresent()) {
-            Movie movie = optionalMovie.get();
-            movie.setTitle(movieDetails.getTitle());
-            movie.setReleaseYear(movieDetails.getReleaseYear());
-            movie.setGenre(movieDetails.getGenre());
-            movie.setDirector(movieDetails.getDirector());
-            movie.setSynopsis(movieDetails.getSynopsis());
-            movie.setPosterUrl(movieDetails.getPosterUrl());
-            return movieRepository.save(movie);
-        } else {
-            return null;
-        }
+    @Transactional
+    public MovieResponseDto updateMovie(Long id, MovieCreateDto movieCreateDto) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+        updateMovieFromDto(movie, movieCreateDto);
+        Movie updatedMovie = movieRepository.save(movie);
+        return convertToResponseDto(updatedMovie);
     }
 
-    // Eliminar una película
-    public boolean deleteMovie(Long id) {
-        if (movieRepository.existsById(id)) {
-            movieRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+    @Transactional
+    public void deleteMovie(Long id) {
+        movieRepository.deleteById(id);
+    }
+
+    private void updateMovieFromDto(Movie movie, MovieCreateDto dto) {
+        movie.setTitle(dto.getTitle());
+        movie.setReleaseYear(dto.getReleaseYear());
+        movie.setDirector(dto.getDirector());
+    }
+
+    private MovieResponseDto convertToResponseDto(Movie movie) {
+        MovieResponseDto dto = new MovieResponseDto();
+        dto.setId(movie.getId());
+        dto.setTitle(movie.getTitle());
+        dto.setReleaseYear(movie.getReleaseYear());
+        dto.setDirector(movie.getDirector());
+        return dto;
     }
 }

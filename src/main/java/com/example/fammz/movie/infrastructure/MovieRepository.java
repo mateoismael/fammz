@@ -2,16 +2,9 @@ package com.example.fammz.movie.infrastructure;
 
 import com.example.fammz.movie.domain.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-
-    // Obtener películas por género
-    List<Movie> findByGenre(String genre);
-
-    // Obtener películas por año de lanzamiento
-    List<Movie> findByReleaseYear(Integer releaseYear);
-
-    // Obtener películas por género y año de lanzamiento
-    List<Movie> findByGenreAndReleaseYear(String genre, Integer releaseYear);
+    // Métodos personalizados si son necesarios
 }

@@ -1,4 +1,4 @@
-package com.example.fammz.exceptions;
+package com.example.fammz.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message) {

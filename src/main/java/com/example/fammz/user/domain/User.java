@@ -1,62 +1,44 @@
 package com.example.fammz.user.domain;
 
 
-
-import com.example.fammz.comment.domain.Comment;
-import com.example.fammz.post.domain.Post;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDate;
+import com.example.fammz.post.domain.Post;
+import com.example.fammz.comment.domain.Comment;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @NotNull
+    @Size(min = 2, max = 50)
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @NotNull
+    @Email
+    @Column(unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @NotNull
+    @Size(min = 8, max = 100)
     private String password;
 
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
-
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
-
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 }

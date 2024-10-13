@@ -1,4 +1,4 @@
-package com.example.fammz.exceptions;
+package com.example.fammz.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

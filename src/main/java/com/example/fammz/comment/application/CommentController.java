@@ -1,53 +1,49 @@
 package com.example.fammz.comment.application;
 
-import com.example.fammz.comment.domain.Comment;
-import com.example.fammz.user.domain.User;
 import com.example.fammz.comment.domain.CommentService;
+import com.example.fammz.comment.dto.CommentCreateDto;
+import com.example.fammz.comment.dto.CommentResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/comments")
 public class CommentController {
-
-    private final CommentService commentService;
-
     @Autowired
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
+    private CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-        return ResponseEntity.ok(commentService.createComment(comment));
+    public ResponseEntity<CommentResponseDto> createComment(@Valid @RequestBody CommentCreateDto commentCreateDto) {
+        CommentResponseDto createdComment = commentService.createComment(commentCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
-        return ResponseEntity.ok(commentService.getCommentById(id));
+    public ResponseEntity<CommentResponseDto> getCommentById(@PathVariable Long id) {
+        CommentResponseDto comment = commentService.getCommentById(id);
+        return ResponseEntity.ok(comment);
     }
 
-    @GetMapping("/post/{postId}")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Long postId) {
-        return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Comment>> getCommentsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(commentService.getCommentsByUserId(userId));
+    @GetMapping
+    public ResponseEntity<List<CommentResponseDto>> getAllComments() {
+        List<CommentResponseDto> comments = commentService.getAllComments();
+        return ResponseEntity.ok(comments);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment commentDetails) {
-        return ResponseEntity.ok(commentService.updateComment(id, commentDetails));
+    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id, @Valid @RequestBody CommentCreateDto commentCreateDto) {
+        CommentResponseDto updatedComment = commentService.updateComment(id, commentCreateDto);
+        return ResponseEntity.ok(updatedComment);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

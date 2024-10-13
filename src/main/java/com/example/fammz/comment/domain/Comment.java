@@ -1,37 +1,35 @@
 package com.example.fammz.comment.domain;
 
-import com.example.fammz.post.domain.Post;
-import com.example.fammz.user.domain.User;
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
+import com.example.fammz.user.domain.User;
+import com.example.fammz.post.domain.Post;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    private String content;
-
-
-    private LocalDateTime createdAt;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    @NotNull
     private Post post;
 
+    @NotNull
+    @Size(min = 1, max = 500)
+    private String content;
 
+    @NotNull
+    private ZonedDateTime createdAt;
 }

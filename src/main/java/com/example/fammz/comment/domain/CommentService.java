@@ -1,48 +1,82 @@
 package com.example.fammz.comment.domain;
 
-import com.example.fammz.comment.domain.Comment;
+import com.example.fammz.comment.dto.CommentCreateDto;
+import com.example.fammz.comment.dto.CommentResponseDto;
 import com.example.fammz.comment.infrastructure.CommentRepository;
-import com.example.fammz.exceptions.ResourceNotFoundException;
+import com.example.fammz.user.domain.User;
+import com.example.fammz.user.infrastructure.UserRepository;
+import com.example.fammz.post.domain.Post;
+import com.example.fammz.post.infrastructure.PostRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
-
-    private final CommentRepository commentRepository;
-
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
+    private CommentRepository commentRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @Transactional
+    public CommentResponseDto createComment(CommentCreateDto commentCreateDto) {
+        Comment comment = new Comment();
+        updateCommentFromDto(comment, commentCreateDto);
+        comment.setCreatedAt(ZonedDateTime.now());
+        Comment savedComment = commentRepository.save(comment);
+        return convertToResponseDto(savedComment);
     }
 
-    public Comment createComment(Comment comment) {
-        return commentRepository.save(comment);
+    public CommentResponseDto getCommentById(Long id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        return convertToResponseDto(comment);
     }
 
-    public Comment getCommentById(Long id) {
-        return commentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id: " + id));
+    public List<CommentResponseDto> getAllComments() {
+        return commentRepository.findAll().stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Comment> getCommentsByPostId(Long postId) {
-        return commentRepository.findByPostId(postId);
+    @Transactional
+    public CommentResponseDto updateComment(Long id, CommentCreateDto commentCreateDto) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        updateCommentFromDto(comment, commentCreateDto);
+        Comment updatedComment = commentRepository.save(comment);
+        return convertToResponseDto(updatedComment);
     }
 
-    public List<Comment> getCommentsByUserId(Long userId) {
-        return commentRepository.findByUserId(userId);
-    }
-
-    public Comment updateComment(Long id, Comment commentDetails) {
-        Comment comment = getCommentById(id);
-        comment.setContent(commentDetails.getContent());
-        return commentRepository.save(comment);
-    }
-
+    @Transactional
     public void deleteComment(Long id) {
-        Comment comment = getCommentById(id);
-        commentRepository.delete(comment);
+        commentRepository.deleteById(id);
+    }
+
+    private void updateCommentFromDto(Comment comment, CommentCreateDto dto) {
+        comment.setContent(dto.getContent());
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        comment.setUser(user);
+        Post post = postRepository.findById(dto.getPostId())
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        comment.setPost(post);
+    }
+
+    private CommentResponseDto convertToResponseDto(Comment comment) {
+        CommentResponseDto dto = new CommentResponseDto();
+        dto.setId(comment.getId());
+        dto.setContent(comment.getContent());
+        dto.setUserId(comment.getUser().getId());
+        dto.setUserName(comment.getUser().getName());
+        dto.setPostId(comment.getPost().getId());
+        dto.setCreatedAt(comment.getCreatedAt());
+        return dto;
     }
 }
