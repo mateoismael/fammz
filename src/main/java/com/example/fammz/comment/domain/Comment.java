@@ -1,6 +1,6 @@
 package com.example.fammz.comment.domain;
 
-import com.example.fammz.post.domain.Post;
+import com.example.fammz.Post.domain.Post;
 import com.example.fammz.user.domain.User;
 
 import jakarta.persistence.Entity;
@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Comment {
 
     @Id

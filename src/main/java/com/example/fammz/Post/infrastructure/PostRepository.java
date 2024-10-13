@@ -1,6 +1,6 @@
-package com.example.fammz.Post.Repository;
+package com.example.fammz.Post.infrastructure;
 
-import com.example.fammz.post.domain.Post;
+import com.example.fammz.Post.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
