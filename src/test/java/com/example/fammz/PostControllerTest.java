@@ -1,9 +1,16 @@
 package com.example.fammz;
 
+<<<<<<< HEAD
 import com.example.fammz.post.domain.Post;
 import com.example.fammz.post.Controller.PostController;
 import com.example.fammz.post.DTOs.PostDTO;
 import com.example.fammz.post.domain.PostService;
+=======
+import com.example.fammz.Post.domain.Post;
+import com.example.fammz.Post.application.PostController;
+import com.example.fammz.Post.dto.PostDTO;
+import com.example.fammz.Post.domain.PostService;
+>>>>>>> 618f301e2124279a1822e480b17dc282eb10be18
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,13 +45,12 @@ public class PostControllerTest {
         List<Post> posts = new ArrayList<>();
         posts.add(new Post());
 
-        // Configurar el mock
+
         when(postService.getAllPosts()).thenReturn(posts);
 
-        // Llamar al método del controlador
+
         ResponseEntity<List<Post>> response = postController.getAllPosts();
 
-        // Verificar el resultado
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().size());
     }

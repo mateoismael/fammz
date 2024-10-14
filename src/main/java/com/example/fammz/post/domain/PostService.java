@@ -1,6 +1,10 @@
-package com.example.fammz.post.domain;
+package com.example.fammz.Post.domain;
 
+<<<<<<< HEAD:src/main/java/com/example/fammz/post/domain/PostService.java
 import com.example.fammz.post.Repository.PostRepository;
+=======
+import com.example.fammz.Post.infrastructure.PostRepository;
+>>>>>>> 618f301e2124279a1822e480b17dc282eb10be18:src/main/java/com/example/fammz/Post/domain/PostService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,14 @@
-package com.example.fammz.post.application;
+package com.example.fammz.Post.application;
 
+<<<<<<< HEAD:src/main/java/com/example/fammz/post/application/PostController.java
 import com.example.fammz.post.DTOs.PostDTO;
 import com.example.fammz.post.domain.Post;
 import com.example.fammz.post.domain.PostService;
+=======
+import com.example.fammz.Post.dto.PostDTO;
+import com.example.fammz.Post.domain.Post;
+import com.example.fammz.Post.domain.PostService;
+>>>>>>> 618f301e2124279a1822e480b17dc282eb10be18:src/main/java/com/example/fammz/Post/application/PostController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

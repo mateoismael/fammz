@@ -1,9 +1,7 @@
 package com.example.fammz.user.domain;
 
-
-
 import com.example.fammz.comment.domain.Comment;
-import com.example.fammz.post.domain.Post;
+import com.example.fammz.Post.domain.Post;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class User {
 
     @Id

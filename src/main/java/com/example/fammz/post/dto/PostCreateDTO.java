@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/example/fammz/post/dto/PostCreateDTO.java
 package com.example.fammz.post.DTOs;
+=======
+package com.example.fammz.Post.dto;
+>>>>>>> 618f301e2124279a1822e480b17dc282eb10be18:src/main/java/com/example/fammz/Post/dto/PostCreateDTO.java
 
 public class PostCreateDTO {
 
