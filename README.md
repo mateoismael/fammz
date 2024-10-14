@@ -10,11 +10,12 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0.0-green)](https://spring.io/projects/spring-boot)
 
 Una plataforma moderna para compartir y descubrir opiniones sobre películas.
+
 </div>
 
 ---
 
-## 📋 Índice
+## 📋 Índicee
 
 - [Introducción](#-introducción)
 - [Problema y Solución](#-problema-y-solución)
@@ -35,6 +36,7 @@ Una plataforma moderna para compartir y descubrir opiniones sobre películas.
 **Muviz** nace en el contexto del curso de Desarrollo Basado en Plataformas (DBP), con el objetivo de crear un espacio donde los amantes del cine puedan compartir sus pensamientos y descubrir nuevas películas.
 
 **Objetivos:**
+
 - 🛠 Desarrollar una API RESTful robusta
 - 🔐 Implementar un sistema de autenticación seguro
 - 👥 Fomentar una comunidad activa de cinéfilos
@@ -44,13 +46,17 @@ Una plataforma moderna para compartir y descubrir opiniones sobre películas.
 ## 🎯 Problema y Solución
 
 ### El Desafío
+
 Muchas plataformas actuales de reseñas de películas carecen de:
+
 - 🔒 Sistemas de autenticación robustos
 - 🧹 Mecanismos efectivos contra spam
 - 🤝 Enfoque centrado en la comunidad
 
 ### Nuestra Respuesta
+
 Muviz aborda estos problemas ofreciendo:
+
 - 🛡 Autenticación segura con JWT
 - 🎭 Sistema de roles para moderar contenido
 - 💬 Interacciones enriquecedoras entre usuarios
@@ -60,45 +66,52 @@ Muviz aborda estos problemas ofreciendo:
 ## ✨ Características
 
 1. **🔐 Autenticación Avanzada**
-    - Registro de usuarios
-    - Login seguro
-    - Gestión de tokens JWT
+
+   - Registro de usuarios
+   - Login seguro
+   - Gestión de tokens JWT
 
 2. **👤 Gestión de Usuarios**
-    - Perfiles personalizables
-    - Roles: USER, MODERATOR, ADMIN
+
+   - Perfiles personalizables
+   - Roles: USER, MODERATOR, ADMIN
 
 3. **🎥 Catálogo de Películas**
-    - Búsqueda y filtrado
-    - Información detallada
+
+   - Búsqueda y filtrado
+   - Información detallada
 
 4. **📝 Sistema de Posts**
-    - Crear, leer, actualizar y eliminar reseñas
-    - Interacción con otros usuarios
+
+   - Crear, leer, actualizar y eliminar reseñas
+   - Interacción con otros usuarios
 
 5. **💬 Comentarios**
-    - Discusiones en tiempo real
-    - Notificaciones
+   - Discusiones en tiempo real
+   - Notificaciones
 
 ---
 
 ## 💻 Tecnologías
 
 - **Backend:**
-    - ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-    - ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+
+  - ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+  - ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
 
 - **Seguridad:**
-    - ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
+
+  - ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
 
 - **Base de Datos:**
-    - ![JPA](https://img.shields.io/badge/JPA-007396?style=for-the-badge&logo=java&logoColor=white)
-    - ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
+
+  - ![JPA](https://img.shields.io/badge/JPA-007396?style=for-the-badge&logo=java&logoColor=white)
+  - ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
 
 - **Herramientas:**
-    - ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
-    - ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-    - ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+  - ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+  - ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+  - ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 
@@ -154,11 +167,13 @@ erDiagram
 ## 🧪 Testing
 
 ### Niveles
+
 - ✅ Unit Testing
 - 🔄 Integration Testing
 - 🌐 API Testing
 
 ### Manejo de Errores
+
 ```java
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -204,6 +219,7 @@ Muviz representa un hito significativo en nuestro aprendizaje, demostrando:
 - 🚀 Eficiencia mediante programación asíncrona
 
 **Próximos Pasos:**
+
 1. 🖥 Desarrollo de frontend
 2. 🧠 Sistema de recomendaciones
 3. 🌐 Integración con APIs externas de películas
