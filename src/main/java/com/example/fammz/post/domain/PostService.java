@@ -1,5 +1,6 @@
 package com.example.fammz.post.domain;
 
+import com.example.fammz.exception.ForbiddenAccessException;
 import com.example.fammz.post.dto.PostCreateDto;
 import com.example.fammz.post.dto.PostResponseDto;
 import com.example.fammz.post.infrastructure.PostRepository;
@@ -7,6 +8,7 @@ import com.example.fammz.user.domain.User;
 import com.example.fammz.user.infrastructure.UserRepository;
 import com.example.fammz.movie.domain.Movie;
 import com.example.fammz.movie.infrastructure.MovieRepository;
+import com.example.fammz.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,48 +27,66 @@ public class PostService {
     private MovieRepository movieRepository;
 
     @Transactional
-    public PostResponseDto createPost(PostCreateDto postCreateDto) {
+    public PostResponseDto createPost(PostCreateDto postCreateDto, Long currentUserId) {
         Post post = new Post();
-        updatePostFromDto(post, postCreateDto);
+        User user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Movie movie = movieRepository.findById(postCreateDto.getMovieId())
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
+
+        post.setContent(postCreateDto.getContent());
+        post.setUser(user);
+        post.setMovie(movie);
         post.setCreatedAt(ZonedDateTime.now());
+
         Post savedPost = postRepository.save(post);
         return convertToResponseDto(savedPost);
     }
 
-    public PostResponseDto getPostById(Long id) {
+    public PostResponseDto getPostById(Long id, Long currentUserId) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        if (!post.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to view this post");
+        }
         return convertToResponseDto(post);
     }
 
-    public List<PostResponseDto> getAllPosts() {
-        return postRepository.findAll().stream()
+    public List<PostResponseDto> getAllPostsForUser(Long currentUserId) {
+        return postRepository.findByUserId(currentUserId).stream()
                 .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public PostResponseDto updatePost(Long id, PostCreateDto postCreateDto) {
+    public PostResponseDto updatePost(Long id, PostCreateDto postCreateDto, Long currentUserId) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-        updatePostFromDto(post, postCreateDto);
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+
+        if (!post.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to update this post");
+        }
+
+        Movie movie = movieRepository.findById(postCreateDto.getMovieId())
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
+
+        post.setContent(postCreateDto.getContent());
+        post.setMovie(movie);
+
         Post updatedPost = postRepository.save(post);
         return convertToResponseDto(updatedPost);
     }
 
     @Transactional
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
-    }
+    public void deletePost(Long id, Long currentUserId) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
 
-    private void updatePostFromDto(Post post, PostCreateDto dto) {
-        post.setContent(dto.getContent());
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        post.setUser(user);
-        Movie movie = movieRepository.findById(dto.getMovieId())
-                .orElseThrow(() -> new RuntimeException("Movie not found"));
-        post.setMovie(movie);
+        if (!post.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to delete this post");
+        }
+
+        postRepository.deleteById(id);
     }
 
     private PostResponseDto convertToResponseDto(Post post) {

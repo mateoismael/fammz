@@ -10,8 +10,5 @@ public class CommentCreateDto {
     private String content;
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long postId;
 }

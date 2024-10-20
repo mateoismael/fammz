@@ -3,10 +3,12 @@ package com.example.fammz.comment.domain;
 import com.example.fammz.comment.dto.CommentCreateDto;
 import com.example.fammz.comment.dto.CommentResponseDto;
 import com.example.fammz.comment.infrastructure.CommentRepository;
+import com.example.fammz.exception.ForbiddenAccessException;
 import com.example.fammz.user.domain.User;
 import com.example.fammz.user.infrastructure.UserRepository;
 import com.example.fammz.post.domain.Post;
 import com.example.fammz.post.infrastructure.PostRepository;
+import com.example.fammz.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,48 +27,62 @@ public class CommentService {
     private PostRepository postRepository;
 
     @Transactional
-    public CommentResponseDto createComment(CommentCreateDto commentCreateDto) {
+    public CommentResponseDto createComment(CommentCreateDto commentCreateDto, Long currentUserId) {
         Comment comment = new Comment();
-        updateCommentFromDto(comment, commentCreateDto);
+        User user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Post post = postRepository.findById(commentCreateDto.getPostId())
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+
+        comment.setContent(commentCreateDto.getContent());
+        comment.setUser(user);
+        comment.setPost(post);
         comment.setCreatedAt(ZonedDateTime.now());
+
         Comment savedComment = commentRepository.save(comment);
         return convertToResponseDto(savedComment);
     }
 
-    public CommentResponseDto getCommentById(Long id) {
+    public CommentResponseDto getCommentById(Long id, Long currentUserId) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+        if (!comment.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to view this comment");
+        }
         return convertToResponseDto(comment);
     }
 
-    public List<CommentResponseDto> getAllComments() {
-        return commentRepository.findAll().stream()
+    public List<CommentResponseDto> getAllCommentsForUser(Long currentUserId) {
+        return commentRepository.findByUserId(currentUserId).stream()
                 .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long id, CommentCreateDto commentCreateDto) {
+    public CommentResponseDto updateComment(Long id, CommentCreateDto commentCreateDto, Long currentUserId) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
-        updateCommentFromDto(comment, commentCreateDto);
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+
+        if (!comment.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to update this comment");
+        }
+
+        comment.setContent(commentCreateDto.getContent());
+
         Comment updatedComment = commentRepository.save(comment);
         return convertToResponseDto(updatedComment);
     }
 
     @Transactional
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
-    }
+    public void deleteComment(Long id, Long currentUserId) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
 
-    private void updateCommentFromDto(Comment comment, CommentCreateDto dto) {
-        comment.setContent(dto.getContent());
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        comment.setUser(user);
-        Post post = postRepository.findById(dto.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-        comment.setPost(post);
+        if (!comment.getUser().getId().equals(currentUserId)) {
+            throw new ForbiddenAccessException("You don't have permission to delete this comment");
+        }
+
+        commentRepository.deleteById(id);
     }
 
     private CommentResponseDto convertToResponseDto(Comment comment) {
