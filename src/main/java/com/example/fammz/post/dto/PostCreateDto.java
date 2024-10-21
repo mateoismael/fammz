@@ -10,8 +10,5 @@ public class PostCreateDto {
     private String content;
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long movieId;
 }

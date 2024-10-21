@@ -33,7 +33,6 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
@@ -56,5 +55,12 @@ public class UserController {
         UserResponseDto user = userService.getUserById(currentUser.getId());
         return ResponseEntity.ok(user);
     }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteCurrentUser(@AuthenticationPrincipal UserPrincipal currentUser) {
+        userService.deleteUser(currentUser.getId());
+        return ResponseEntity.ok().build();
+    }
+
 
 }

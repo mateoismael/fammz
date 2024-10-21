@@ -1,6 +1,6 @@
 <div align="center">
   <div align="center">
-  <img src="assets/muviz-logo.png" alt="Muviz Logo" width="150px">
+  <img src="src/main/resources/assets/muviz-logo.png" alt="Muviz Logo" width="150px">
 
 # Muviz
 

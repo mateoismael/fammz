@@ -38,12 +38,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Añade esta línea aquí
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users/me").authenticated()
                         .requestMatchers("/users/**").hasAnyRole("ADMIN")
                         .requestMatchers("/movies/**").hasAnyRole("ADMIN", "MODERATOR")
-                        .requestMatchers(HttpMethod.GET, "/posts/**", "/comments/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/posts/**", "/comments/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/posts/**", "/comments/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/posts/**", "/comments/**").hasAnyRole("MODERATOR", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/posts/**", "/comments/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/posts/**", "/comments/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/posts/**", "/comments/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/posts/**", "/comments/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -56,7 +57,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Ajusta según tus necesidades
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080")); // Ajusta según tus necesidades
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
         configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
@@ -87,4 +88,6 @@ public class SecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
+
+
 }
