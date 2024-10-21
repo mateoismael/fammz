@@ -1,15 +1,19 @@
 package com.example.fammz.user.domain;
 
+import com.example.fammz.email.UserRegistrationEvent;
 import com.example.fammz.exception.ResourceNotFoundException;
 import com.example.fammz.user.dto.UserCreateDto;
 import com.example.fammz.user.dto.UserResponseDto;
 import com.example.fammz.user.infrastructure.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +23,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public UserResponseDto createUser(UserCreateDto userCreateDto) {
@@ -59,7 +66,12 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+
+
+        userRepository.delete(user);
     }
 
     private UserResponseDto convertToResponseDto(User user) {

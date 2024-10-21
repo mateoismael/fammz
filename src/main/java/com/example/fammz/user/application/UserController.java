@@ -56,4 +56,11 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteCurrentUser(@AuthenticationPrincipal UserPrincipal currentUser) {
+        userService.deleteUser(currentUser.getId());
+        return ResponseEntity.ok().build();
+    }
+
+
 }
