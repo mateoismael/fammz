@@ -69,7 +69,7 @@ public class AuthService {
         templateModel.put("userEmail", savedUser.getEmail());
 
         // Publicar el evento para enviar el correo de bienvenida
-        eventPublisher.publishEvent(new UserRegistrationEvent(savedUser.getEmail(), "Bienvenido a FAMMZ", "welcome-email-template", templateModel));
+        eventPublisher.publishEvent(new UserRegistrationEvent(savedUser.getEmail(), "Bienvenido a Muviz", "welcome-email-template", templateModel));
 
         return savedUser;
     }
