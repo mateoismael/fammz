@@ -1,121 +1,88 @@
 <div align="center">
-  <div align="center">
   <img src="src/main/resources/assets/muviz-logo.png" alt="Muviz Logo" width="150px">
 
-# Muviz
+# Muviz: Red Social para Cinéfilos
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/yourusername/muviz)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/java-17-orange)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0.0-green)](https://spring.io/projects/spring-boot)
 
-Una plataforma moderna para compartir y descubrir opiniones sobre películas.
+CS 2031 Desarrollo Basado en Plataforma
+
+Desarrollado por:
+- Mateo Ismael Rodriguez Ramos
 
 </div>
 
----
+## Índice
 
-## 📋 Índicee
+- [Introducción](#introducción)
+- [Identificación del Problema o Necesidad](#identificación-del-problema-o-necesidad)
+- [Descripción de la Solución](#descripción-de-la-solución)
+- [Modelo de Entidades](#modelo-de-entidades)
+- [Testing y Manejo de Errores](#testing-y-manejo-de-errores)
+- [Medidas de Seguridad Implementadas](#medidas-de-seguridad-implementadas)
+- [Eventos y Asincronía](#eventos-y-asincronía)
+- [GitHub](#github)
+- [Conclusión](#conclusión)
+- [Apéndices](#apéndices)
 
-- [Introducción](#-introducción)
-- [Problema y Solución](#-problema-y-solución)
-- [Características](#-características)
-- [Tecnologías](#-tecnologías)
-- [Modelo de Datos](#-modelo-de-datos)
-- [Seguridad](#-seguridad)
-- [Testing](#-testing)
-- [Eventos y Asincronía](#-eventos-y-asincronía)
-- [Desarrollo](#-desarrollo)
-- [Conclusión](#-conclusión)
-- [Licencia](#-licencia)
+## Introducción
 
----
+### Contexto
 
-## 🎬 Introducción
+Muviz nace como un proyecto para el curso de Desarrollo Basado en Plataformas (DBP), con el objetivo de crear una plataforma donde los amantes del cine puedan compartir sus opiniones y descubrir nuevas películas.
 
-**Muviz** nace en el contexto del curso de Desarrollo Basado en Plataformas (DBP), con el objetivo de crear un espacio donde los amantes del cine puedan compartir sus pensamientos y descubrir nuevas películas.
+### Objetivos del Proyecto
 
-**Objetivos:**
+1. Desarrollar una API RESTful para una red social de cinéfilos.
+2. Implementar un sistema de autenticación y autorización seguro.
+3. Crear funcionalidades para compartir opiniones sobre películas.
+4. Aplicar los conocimientos adquiridos en el curso de DBP.
 
-- 🛠 Desarrollar una API RESTful robusta
-- 🔐 Implementar un sistema de autenticación seguro
-- 👥 Fomentar una comunidad activa de cinéfilos
+## Identificación del Problema o Necesidad
 
----
-
-## 🎯 Problema y Solución
-
-### El Desafío
+### Descripción del Problema
 
 Muchas plataformas actuales de reseñas de películas carecen de:
+- Sistemas de autenticación robustos.
+- Mecanismos efectivos para moderar el contenido.
+- Un enfoque centrado en la comunidad de cinéfilos.
 
-- 🔒 Sistemas de autenticación robustos
-- 🧹 Mecanismos efectivos contra spam
-- 🤝 Enfoque centrado en la comunidad
+### Justificación
 
-### Nuestra Respuesta
+Muviz busca abordar estas carencias proporcionando:
+- Una plataforma segura y dedicada para los amantes del cine.
+- Un sistema de roles para gestionar el contenido y las interacciones.
+- Un espacio para compartir y discutir sobre películas de manera estructurada.
 
-Muviz aborda estos problemas ofreciendo:
+## Descripción de la Solución
 
-- 🛡 Autenticación segura con JWT
-- 🎭 Sistema de roles para moderar contenido
-- 💬 Interacciones enriquecedoras entre usuarios
+### Funcionalidades Implementadas
 
----
+1. **Sistema de Autenticación y Autorización**
+    - Registro y login de usuarios con JWT.
+    - Roles de usuario (USER, MODERATOR, ADMIN).
 
-## ✨ Características
+2. **Gestión de Películas**
+    - CRUD de películas (implementado para todos los usuarios, pendiente de restringir por roles).
 
-1. **🔐 Autenticación Avanzada**
+3. **Sistema de Posts**
+    - Creación, lectura, actualización y eliminación de posts sobre películas.
 
-   - Registro de usuarios
-   - Login seguro
-   - Gestión de tokens JWT
+4. **Sistema de Comentarios**
+    - Creación, lectura, actualización y eliminación de comentarios en posts.
 
-2. **👤 Gestión de Usuarios**
+5. **Perfil de Usuario**
+    - Obtención de información del usuario actual.
 
-   - Perfiles personalizables
-   - Roles: USER, MODERATOR, ADMIN
+### Tecnologías Utilizadas
 
-3. **🎥 Catálogo de Películas**
+- **Backend**: Java con Spring Boot
+- **Seguridad**: Spring Security con JWT
+- **Base de Datos**: JPA/Hibernate (la base de datos específica no está confirmada en el código)
+- **Manejo de Dependencias**: Maven
 
-   - Búsqueda y filtrado
-   - Información detallada
-
-4. **📝 Sistema de Posts**
-
-   - Crear, leer, actualizar y eliminar reseñas
-   - Interacción con otros usuarios
-
-5. **💬 Comentarios**
-   - Discusiones en tiempo real
-   - Notificaciones
-
----
-
-## 💻 Tecnologías
-
-- **Backend:**
-
-  - ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-  - ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-
-- **Seguridad:**
-
-  - ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
-
-- **Base de Datos:**
-
-  - ![JPA](https://img.shields.io/badge/JPA-007396?style=for-the-badge&logo=java&logoColor=white)
-  - ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
-
-- **Herramientas:**
-  - ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
-  - ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-  - ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
-
----
-
-## 📊 Modelo de Datos
+## Modelo de Entidades
 
 ```mermaid
 erDiagram
@@ -125,7 +92,7 @@ erDiagram
     POST ||--o{ COMMENT : has
 
     USER {
-        Long id
+        Long id PK
         String name
         String email
         String password
@@ -133,105 +100,155 @@ erDiagram
     }
 
     MOVIE {
-        Long id
+        Long id PK
         String title
         Integer releaseYear
         String director
     }
 
     POST {
-        Long id
+        Long id PK
+        Long userId FK
+        Long movieId FK
         String content
-        DateTime createdAt
+        ZonedDateTime createdAt
     }
 
     COMMENT {
-        Long id
+        Long id PK
+        Long userId FK
+        Long postId FK
         String content
-        DateTime createdAt
+        ZonedDateTime createdAt
     }
 ```
 
----
+### Descripción de Entidades
 
-## 🔒 Seguridad
+- **User**: Almacena información de los usuarios, incluyendo sus roles.
+- **Movie**: Contiene detalles de las películas.
+- **Post**: Representa las publicaciones de los usuarios sobre películas.
+- **Comment**: Almacena los comentarios en los posts.
 
-- **🔑 JWT Authentication**
-- **🔐 Password Encryption:** BCrypt
-- **🚦 Role-based Access Control**
-- **🛡 CORS Configuration**
-- **🚫 Rate Limiting**
+## Manejo de Errores
 
----
-
-## 🧪 Testing
-
-### Niveles
-
-- ✅ Unit Testing
-- 🔄 Integration Testing
-- 🌐 API Testing
-
-### Manejo de Errores
+Se ha implementado un sistema global de manejo de excepciones:
 
 ```java
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<Object> handleException(Exception ex) {
-        // Lógica de manejo de excepciones
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), "Error 404 - Not Found", ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), "Error 500 - Internal Server Error", ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ForbiddenAccessException.class)
+    public ResponseEntity<?> handleForbiddenAccessException(ForbiddenAccessException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), "Error 403 - Forbidden", ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
 }
 ```
 
----
+Este sistema permite un manejo consistente de errores en toda la aplicación.
 
-## ⚡ Eventos y Asincronía
+## Medidas de Seguridad Implementadas
+
+1. **Autenticación con JWT**: Se utiliza JSON Web Tokens para la autenticación de usuarios.
+2. **Roles de Usuario**: Implementación de roles (USER, MODERATOR, ADMIN) para control de acceso.
+3. **Encriptación de Contraseñas**: Se utiliza BCrypt para el hash de contraseñas.
+4. **CORS**: Configuración de CORS para controlar el acceso desde diferentes orígenes.
+5. **Rate Limiting**: Implementado para prevenir ataques de fuerza bruta.
+
+Ejemplo de configuración de seguridad:
 
 ```java
-@Async
-@EventListener
-public void handleUserRegisteredEvent(UserRegisteredEvent event) {
-    // Envío asíncrono de correo de bienvenida
-    emailService.sendWelcomeEmail(event.getUserEmail());
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/users/me").authenticated()
+                .requestMatchers("/users/**").hasAnyRole("ADMIN")
+                .requestMatchers("/movies/**").hasAnyRole("ADMIN", "MODERATOR")
+                .requestMatchers(HttpMethod.GET, "/posts/**", "/comments/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/posts/**", "/comments/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/posts/**", "/comments/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/posts/**", "/comments/**").authenticated()
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
 }
 ```
 
----
+## Eventos y Asincronía
 
-## 👨‍💻 Desarrollo
+Se ha implementado un sistema de eventos asíncronos para el envío de correos electrónicos de bienvenida:
 
-El proyecto sigue las mejores prácticas de desarrollo:
+```java
+@Component
+public class EmailListener {
+    @Autowired
+    private EmailService emailService;
 
-- 🌿 Branching estratégico
-- 👀 Code reviews vía Pull Requests
-- 🎫 Tracking de issues
-- 🔄 Flujo de trabajo Gitflow
+    @EventListener
+    @Async
+    public void handleUserRegistrationEvent(UserRegistrationEvent event) {
+        try {
+            emailService.sendTemplateMessage(event.getEmail(), event.getSubject(), event.getTemplateName(), event.getVariables());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
 
----
+Este enfoque permite enviar correos electrónicos de forma asíncrona, mejorando la respuesta del servidor.
 
-## 🎉 Conclusión
+## Conclusión
 
-Muviz representa un hito significativo en nuestro aprendizaje, demostrando:
+### Logros del Proyecto
 
-- 🏗 Arquitectura robusta
-- 🔐 Implementación de seguridad avanzada
-- 🚀 Eficiencia mediante programación asíncrona
+1. Desarrollo de una API RESTful funcional para una red social de cinéfilos.
+2. Implementación de un sistema de autenticación y autorización basado en JWT.
+3. Creación de funcionalidades para compartir opiniones sobre películas.
 
-**Próximos Pasos:**
+### Aprendizajes Clave
 
-1. 🖥 Desarrollo de frontend
-2. 🧠 Sistema de recomendaciones
-3. 🌐 Integración con APIs externas de películas
+1. Implementación práctica de seguridad en aplicaciones web con Spring Security.
+2. Diseño y desarrollo de una API RESTful.
+3. Manejo de relaciones entre entidades en una base de datos.
 
----
+### Trabajo Futuro
 
-## 📄 Licencia
+1. Desarrollar un frontend para la aplicación.
+2. Mejorar el sistema de recomendaciones de películas.
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+## Apéndices
 
----
+### Licencia
 
-<div align="center">
-  Desarrollado con ❤️ por el equipo de Muviz
-</div>
+[Información sobre la licencia no proporcionada]
+
+### Referencias
+
+- Spring Framework Documentation. (2023). https://spring.io/projects/spring-framework
+- JWT.io. (2023). JSON Web Tokens. https://jwt.io/
