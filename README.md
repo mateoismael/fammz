@@ -103,7 +103,6 @@ erDiagram
         Long id PK
         String title
         Integer releaseYear
-        String director
     }
 
     POST {
