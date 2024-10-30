@@ -79,7 +79,7 @@ Muviz busca abordar estas carencias proporcionando:
 
 - **Backend**: Java con Spring Boot
 - **Seguridad**: Spring Security con JWT
-- **Base de Datos**: JPA/Hibernate (la base de datos específica no está confirmada en el código)
+- **Base de Datos**: Docker / PostgreSQL
 - **Manejo de Dependencias**: Maven
 
 ## Modelo de Entidades
